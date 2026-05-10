@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест Розенцвейга — Этажи Головной офис</title>
+<style>
+:root {
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --border: #e2e0d8;
+  --text: #1a1a18;
+  --muted: #7a7870;
+  --accent: #1a1a18;
+  --gold: #c8a84b;
+  --blue: #2563eb;
+  --red: #dc2626;
+  --green: #16a34a;
+  --orange: #ea580c;
+  --purple: #7c3aed;
+  --teal: #0d9488;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.container { max-width: 680px; margin: 0 auto; padding: 0 20px 60px; }
+.screen { display: none; padding-top: 40px; }
+.screen.active { display: block; }
+
+/* HEADER */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+.logo span { color: var(--muted); font-weight: 400; }
+.header-actions { display: flex; gap: 8px; }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-sm { padding: 16px; }
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+/* TYPOGRAPHY */
+h1 { font-size: 28px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; }
+h2 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+p { color: var(--muted); margin-bottom: 8px; }
+p:last-child { margin-bottom: 0; }
+
+/* FORMS */
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+input[type="text"], input[type="password"], select, textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 15px;
+  color: var(--text);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 14px;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+select { cursor: pointer; }
+input:last-child, select:last-child, textarea:last-child { margin-bottom: 0; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+  font-family: inherit;
+  text-decoration: none;
+}
+.btn-primary { background: var(--text); color: #fff; }
+.btn-primary:hover { opacity: 0.85; }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn-outline:hover { background: var(--surface2); }
+.btn-full { width: 100%; justify-content: center; }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+.btn-gold { background: var(--gold); color: #fff; }
+.btn-gold:hover { opacity: 0.88; }
+
+/* BADGES */
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.badge-E { background: #fef2f2; color: #991b1b; }
+.badge-I { background: #eff6ff; color: #1d4ed8; }
+.badge-M { background: #f0fdf4; color: #166534; }
+.badge-OD { background: #fdf4ff; color: #6b21a8; }
+.badge-ED { background: #fff7ed; color: #9a3412; }
+.badge-NP { background: #f0fdfa; color: #134e4a; }
+
+/* PROGRESS */
+.progress-wrap { margin-bottom: 24px; }
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.progress-bar {
+  background: var(--border);
+  border-radius: 100px;
+  height: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--text);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.2s;
+}
+.dot.done { background: var(--muted); }
+.dot.now { background: var(--text); transform: scale(1.3); }
+
+/* SITUATION */
+.situation-card { margin-bottom: 16px; }
+.sit-number {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.bubble {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.bubble-other {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.bubble-context {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: italic;
+  padding: 6px 0;
+  margin-bottom: 0;
+}
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* METRICS */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.metric {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+}
+.metric-val {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.metric-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* MINI BAR */
+.mini-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.mini-bar-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 28px;
+  font-family: monospace;
+}
+.mini-bar-track {
+  flex: 1;
+  height: 5px;
+  background: var(--surface2);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.mini-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.5s ease;
+}
+.mini-bar-val {
+  font-size: 11px;
+  color: var(--muted);
+  min-width: 32px;
+  text-align: right;
+  font-family: monospace;
+}
+
+/* PEOPLE LIST */
+.person-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.person-row:hover { opacity: 0.7; }
+.person-row:last-child { border-bottom: none; padding-bottom: 0; }
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: #fff;
+}
+.person-info { flex: 1; min-width: 0; }
+.person-name { font-size: 14px; font-weight: 500; }
+.person-role { font-size: 12px; color: var(--muted); }
+.person-badges { display: flex; gap: 4px; flex-shrink: 0; }
+
+/* TABS */
+.tab-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.tab {
+  padding: 7px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.tab.active {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+
+/* ALERTS */
+.alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 14px;
+  display: none;
+}
+.alert-error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.alert-info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; }
+
+/* STAT STRIP */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+}
+.stat-val { font-size: 28px; font-weight: 700; }
+.stat-label { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+/* COMPARE GRID */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.compare-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.compare-card:hover { border-color: var(--text); }
+.compare-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.compare-role { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+
+/* LOADING */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 20px 0;
+}
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ANSWER TABLE */
+.answer-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.answer-row:last-child { border-bottom: none; }
+.answer-sit { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+.answer-text { font-size: 14px; margin-bottom: 5px; }
+
+/* PROFILE BOX */
+.profile-box {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-top: 12px;
+}
+.profile-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.profile-text { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+/* GCR */
+.gcr-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-top: 12px;
+}
+.gcr-val { font-size: 30px; font-weight: 700; color: var(--green); min-width: 52px; }
+.gcr-text { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+/* HIGHLIGHT ROW */
+.highlight { background: #fffbeb; border: 1px solid #fde68a; }
+
+/* DONE screen */
+.done-icon { font-size: 48px; margin-bottom: 12px; }
+
+@media (max-width: 500px) {
+  h1 { font-size: 22px; }
+  .stat-strip { grid-template-columns: repeat(2, 1fr); }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Этажи <span>· Головной офис · Владивосток</span></div>
+  <div class="header-actions">
+    <button class="btn btn-outline btn-sm" onclick="goAdmin()">Администратор</button>
+  </div>
+</header>
+
+<!-- HOME -->
+<div id="s-home" class="screen active">
+  <div class="container" style="max-width:520px">
+    <div style="text-align:center;padding:20px 0 32px">
+      <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Диагностика персонала</div>
+      <h1>Тест Розенцвейга</h1>
+      <p style="max-width:380px;margin:.5rem auto 0;font-size:15px">Фрустрационные реакции в рабочих ситуациях.<br>Займёт 15–20 минут.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Ваши данные</div>
+      <label>Фамилия Имя Отчество</label>
+      <input type="text" id="inp-fio" placeholder="Иванов Иван Иванович">
+      <label>Должность</label>
+      <select id="inp-role">
+        <option value="">— выберите должность —</option>
+        <option value="Менеджер отдела продаж (МОП)">Менеджер отдела продаж (МОП)</option>
+        <option value="Руководитель отдела продаж (РОП)">Руководитель отдела продаж (РОП)</option>
+        <option value="Коммерческий директор">Коммерческий директор</option>
+        <option value="Генеральный директор">Генеральный директор</option>
+      </select>
+      <div class="alert alert-error" id="home-err">Пожалуйста, укажите ФИО и выберите должность.</div>
+      <button class="btn btn-primary btn-full" onclick="startTest()">Начать тест →</button>
+    </div>
+    <p style="text-align:center;font-size:13px;color:var(--muted)">Нет правильных или неправильных ответов.<br>Важна ваша первая спонтанная реакция.</p>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div id="s-intro" class="screen">
+  <div class="container" style="max-width:520px">
+    <div class="card">
+      <div id="intro-who" style="font-size:12px;color:var(--muted);margin-bottom:14px;font-weight:500"></div>
+      <h2>Инструкция</h2>
+      <p style="margin-bottom:10px">Вам будет предложено <strong>24 рабочие ситуации</strong>. В каждой из них кто-то говорит вам что-то неприятное или создаёт препятствие.</p>
+      <p style="margin-bottom:10px">Ваша задача — написать <strong>первое, что пришло бы вам в голову</strong> в ответ. Не думайте долго, отвечайте спонтанно.</p>
+      <p style="margin-bottom:20px">Нет правильных или неправильных ответов — важна ваша <strong>естественная первая реакция</strong>.</p>
+      <button class="btn btn-primary btn-full" onclick="goTest()">Я готов(а) начать →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEST -->
+<div id="s-test" class="screen">
+  <div class="container" style="max-width:600px">
+    <div class="progress-wrap">
+      <div class="dots" id="dots"></div>
+      <div class="progress-top">
+        <span id="prog-label"></span>
+        <span id="prog-count"></span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="prog-fill"></div>
+      </div>
+    </div>
+    <div class="card situation-card" id="sit-card"></div>
+    <div class="card">
+      <label>Ваша первая реакция в этой ситуации:</label>
+      <textarea id="ans-input" rows="3" placeholder="Напишите своё первое побуждение…"></textarea>
+      <div class="nav-row">
+        <button class="btn btn-outline btn-sm" id="btn-prev" onclick="prevQ()">← Назад</button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQ()">Далее →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAVING -->
+<div id="s-saving" class="screen">
+  <div class="container" style="max-width:500px;text-align:center;padding-top:80px">
+    <div class="loading" style="justify-content:center;margin-bottom:12px">
+      <div class="spinner"></div>
+      <span>Сохраняем ваши результаты…</span>
+    </div>
+    <p>Это займёт несколько секунд</p>
+  </div>
+</div>
+
+<!-- DONE -->
+<div id="s-done" class="screen">
+  <div class="container" style="max-width:500px;text-align:center">
+    <div class="done-icon">✓</div>
+    <h2>Тест завершён!</h2>
+    <p id="done-msg" style="margin:.75rem 0 24px;font-size:15px"></p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-outline" onclick="showMyResult()">Посмотреть мои результаты</button>
+      <button class="btn btn-outline" onclick="show('s-home')">На главную</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT (personal) -->
+<div id="s-result" class="screen">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:3px;font-weight:500" id="res-role"></div>
+        <h2 id="res-name" style="margin-bottom:0"></h2>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="show('s-home')">← Назад</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Направление реакции</div>
+      <div class="metrics-grid" id="res-dirs"></div>
+      <div class="card-title" style="margin-top:12px">Тип реакции</div>
+      <div class="metrics-grid" id="res-types"></div>
+      <div class="profile-box" id="res-profile"></div>
+      <div class="gcr-box" id="res-gcr"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ответы по ситуациям</div>
+      <div id="res-answers"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="s-admin-login" class="screen">
+  <div class="container" style="max-width:400px">
+    <h2 style="margin-bottom:20px">Панель администратора</h2>
+    <div class="card">
+      <label>Пароль</label>
+      <input type="password" id="admin-pw" placeholder="Введите пароль" onkeydown="if(event.key==='Enter')checkPw()">
+      <div class="alert alert-error" id="pw-err">Неверный пароль</div>
+      <button class="btn btn-primary btn-full" onclick="checkPw()">Войти</button>
+    </div>
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn btn-outline btn-sm" onclick="show('s-home')">← На главную</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="s-admin" class="screen">
+  <div class="container" style="max-width:800px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Этажи · Головной офис</div>
+        <h2 style="margin-bottom:0">Результаты диагностики</h2>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" onclick="loadAdmin()">↻ Обновить</button>
+        <button class="btn btn-outline btn-sm" onclick="show('s-home')">← Выйти</button>
+      </div>
+    </div>
+    <div id="admin-loading" class="loading" style="margin-bottom:20px">
+      <div class="spinner"></div> Загружаем данные…
+    </div>
+    <div id="admin-body" style="display:none">
+      <div class="stat-strip" id="admin-stats"></div>
+      <div class="tab-row">
+        <button class="tab active" onclick="adminTab('all',this)">Все участники</button>
+        <button class="tab" onclick="adminTab('compare',this)">Сравнение</button>
+        <button class="tab" onclick="adminTab('managers',this)">МОПы</button>
+        <button class="tab" onclick="adminTab('rops',this)">РОПы</button>
+        <button class="tab" onclick="adminTab('kd',this)">Ком. директор</button>
+        <button class="tab" onclick="adminTab('gd',this)">Ген. директор</button>
+      </div>
+      <div id="admin-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PERSON DETAIL -->
+<div id="s-admin-person" class="screen">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 id="adm-person-name" style="margin-bottom:0"></h2>
+      <button class="btn btn-outline btn-sm" onclick="show('s-admin');loadAdmin()">← К списку</button>
+    </div>
+    <div id="adm-person-content"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// SITUATIONS
+// ══════════════════════════════════════
+const situations = [
+  {o:"Вы опоздали на совещание, и клиент уже ушёл. Из-за вашего отсутствия мы потеряли сделку.",n:"Коллега говорит это вам."},
+  {o:"К сожалению, квартира, которую вы показывали клиенту полгода, только что была продана другому покупателю.",n:"Собственник сообщает вам."},
+  {o:"Из-за того что ваш отдел не передал документы вовремя, сделка сорвалась.",n:"Коммерческий директор говорит вам."},
+  {o:"Вы мне обещали, что одобрение ипотеки займёт неделю. Прошло уже три недели!",n:"Клиент говорит вам."},
+  {o:"Ваш отдел показал худшие результаты в этом квартале среди всех офисов.",n:"Руководство говорит вам."},
+  {o:"Мы уходим к другому агентству — там комиссия ниже и сервис лучше.",n:"Постоянный клиент говорит это и уходит."},
+  {o:"Один из ваших сотрудников нагрубил клиенту, теперь у нас жалоба.",n:"Коллега сообщает вам."},
+  {o:"Я знаю, что план не выполнен, но денег на обучение команды сейчас нет.",n:"Директор отвечает на вашу просьбу."},
+  {o:"Вы не были на планёрке три раза подряд — это неприемлемо.",n:"Руководитель говорит вам публично."},
+  {o:"Лучший сотрудник вашего отдела только что написал заявление об уходе.",n:"HR сообщает вам."},
+  {o:"Мы не можем снизить цену на объект — собственник отказывается идти навстречу.",n:"Менеджер говорит вам во время переговоров."},
+  {o:"Показ объекта отменился в последний момент — клиент перестал отвечать на звонки.",n:"Ситуация в пятницу вечером."},
+  {o:"Вы потратили два часа на дорогу к объекту, а ключи оказались не у того человека.",n:"Вы уже на месте, с клиентом."},
+  {o:"Сотрудник взял задаток, но не оформил это официально. Клиент требует возврата.",n:"Юрист сообщает вам."},
+  {o:"Банк отказал клиенту в ипотеке — хотя мы уже подготовили все документы.",n:"Ипотечный специалист сообщает за два дня до сделки."},
+  {o:"Ваш сотрудник сработал мимо вас напрямую с клиентом и заключил сделку без ведома агентства.",n:"Вам стало об этом известно."},
+  {o:"Конкурент переманивает ваших людей, предлагая более высокий процент.",n:"Вы узнаёте об этом от сотрудника."},
+  {o:"Объект, который вы выставили на продажу, вдруг оказался под арестом.",n:"Юрист сообщает прямо перед сделкой."},
+  {o:"Из-за технического сбоя в базе все мои объявления пропали. Я теряю клиентов каждый час!",n:"Сотрудник кричит вам это."},
+  {o:"Соседний отдел получил премию, а наш — нет, хотя мы работали одинаково.",n:"Сотрудник выражает недовольство."},
+  {o:"Клиент хочет аннулировать договор и говорит, что мы ввели его в заблуждение.",n:"Клиент звонит вам напрямую."},
+  {o:"На вашего сотрудника написали негативный отзыв в интернете — набирает просмотры.",n:"SMM сообщает вам утром."},
+  {o:"Сделка была готова, но продавец в последний момент поднял цену.",n:"Менеджер звонит вам растерянным."},
+  {o:"Вы не выполнили личный план продаж уже второй месяц подряд.",n:"Коммерческий директор говорит вам на встрече."}
+];
+
+// ══════════════════════════════════════
+// SCORING
+// ══════════════════════════════════════
+const KW = {
+  E:['виноват','вы','они','он','она','из-за вас','ваша вина','ваша ошибка','безответственность','недопустимо','как так можно','почему вы','это ваша','предупреждал','говорил же','должны были','обязаны','требую','претензия','не ваше дело'],
+  I:['моя вина','я виноват','я виновата','я должен','я должна','мне нужно','я облажался','я облажалась','проблема во мне','я не предусмотрел','я не предусмотрела','следовало','не досмотрел','мой просчёт','я ответственен','исправлю','сделаю выводы'],
+  M:['бывает','всё решим','не беда','ничего страшного','разберёмся','случается','пройдёт','нормально','ситуация решаема','найдём выход','ладно','это жизнь','наладится','продолжаем'],
+  OD:['ужасно','катастрофа','всё пропало','проблема в том','большая потеря','серьёзная ситуация','это неприемлемо','невозможно работать','огромный ущерб','это провал','невозможно','кошмар'],
+  ED:['не согласен','не согласна','это несправедливо','неправда','оправдываю','моя позиция','докажу','объясню','я прав','я права','буду отстаивать','не позволю','возражаю'],
+  NP:['решим','найдём','действую','звоню','исправляем','следующий шаг','план','организую','работаем','выход есть','договоримся','предлагаю','действуем','попробуем','сделаем']
+};
+
+function scoreAnswer(ans){
+  const l = ans.toLowerCase();
+  let s = {E:0,I:0,M:0,OD:0,ED:0,NP:0};
+  for(const[k,ws] of Object.entries(KW)) ws.forEach(w=>{ if(l.includes(w)) s[k]++; });
+  let dir = 'E';
+  if(s.I>=s.E && s.I>=s.M) dir='I';
+  else if(s.M>=s.E && s.M>=s.I) dir='M';
+  else if(s.E>0||s.I>0||s.M>0) dir='E';
+  else dir = /[?!]{2,}|почему|зачем|как так/.test(l)?'E':/\bя\b|мне|мой|моя/.test(l)?'I':'M';
+  let type = 'NP';
+  if(s.OD>=s.ED && s.OD>=s.NP) type='OD';
+  else if(s.ED>=s.OD && s.ED>=s.NP) type='ED';
+  return {dir, type};
+}
+
+function calcResults(answers){
+  const scored = answers.map(a => ({ans:a, ...scoreAnswer(a)}));
+  const dirs = {E:0,I:0,M:0}, types = {OD:0,ED:0,NP:0};
+  scored.forEach(r=>{ dirs[r.dir]++; types[r.type]++; });
+  const tot = scored.length;
+  const gcr = Math.round(((dirs.M + types.NP)/(tot*2))*100);
+  return {scored, dirs, types, gcr, tot};
+}
+
+function pct(n,t){ return Math.round(n/t*100); }
+
+// ══════════════════════════════════════
+// API — облачное хранилище
+// ══════════════════════════════════════
+const SYSTEM_PROMPT = `You are a data storage assistant for a psychological test system.
+You store and retrieve JSON data for the Rosenzweig Frustration Test.
+STORAGE KEY: "rosenzweig_hq_v2"
+
+Commands you handle:
+- SAVE_RESULT: {fio, role, answers, dirs, types, gcr, scored, ts} — save one participant result
+- GET_ALL: return all saved results as JSON array
+- DELETE_ALL: clear all results
+
+Always respond with valid JSON only. No prose, no markdown.
+For SAVE_RESULT: load existing data, append new entry (replace if same fio exists), return {"ok":true,"count":N}
+For GET_ALL: return {"results":[...array of all saved entries...]}
+For DELETE_ALL: return {"ok":true}
+Store data in your response as a structured JSON object.`;
+
+// We use Claude as a stateful JSON store via conversation history
+// The "memory" is rebuilt each time from localStorage conversation log
+const LS_KEY = 'roz_hq_conversation_v2';
+
+function getConversation(){
+  try { return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); } catch(e){ return []; }
+}
+function saveConversation(msgs){
+  try { localStorage.setItem(LS_KEY, JSON.stringify(msgs)); } catch(e){}
+}
+
+async function apiCall(userMsg){
+  const conv = getConversation();
+  const messages = [...conv, {role:'user', content: userMsg}];
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:4000,
+        system: SYSTEM_PROMPT,
+        messages
+      })
+    });
+    if(!resp.ok) throw new Error('API error '+resp.status);
+    const data = await resp.json();
+    const assistantMsg = data.content.map(b=>b.text||'').join('');
+    // Save conversation for state persistence
+    const newConv = [...messages, {role:'assistant', content: assistantMsg}];
+    // Keep conversation lean — only last 6 turns
+    saveConversation(newConv.slice(-6));
+    return assistantMsg;
+  } catch(e){
+    console.error(e);
+    throw e;
+  }
+}
+
+// Fallback: localStorage direct storage (if API unavailable)
+const LS_DIRECT = 'roz_hq_direct_v2';
+function localSave(entry){
+  try {
+    const all = JSON.parse(localStorage.getItem(LS_DIRECT)||'[]');
+    const idx = all.findIndex(r=>r.fio===entry.fio);
+    if(idx>=0) all[idx]=entry; else all.push(entry);
+    localStorage.setItem(LS_DIRECT, JSON.stringify(all));
+  } catch(e){}
+}
+function localGetAll(){
+  try { return JSON.parse(localStorage.getItem(LS_DIRECT)||'[]'); } catch(e){ return []; }
+}
+
+async function saveResult(entry){
+  // Always save locally first (instant)
+  localSave(entry);
+  // Then try API for cross-device sync
+  try {
+    const msg = 'SAVE_RESULT: ' + JSON.stringify(entry);
+    await apiCall(msg);
+  } catch(e){
+    console.warn('API save failed, using local only');
+  }
+}
+
+async function getAllResults(){
+  // Try API first for latest cross-device data
+  try {
+    const raw = await apiCall('GET_ALL');
+    const parsed = JSON.parse(raw);
+    if(parsed.results && Array.isArray(parsed.results)){
+      // Merge with local (local may have newer entries)
+      const local = localGetAll();
+      const merged = [...parsed.results];
+      local.forEach(lr=>{
+        if(!merged.find(r=>r.fio===lr.fio)) merged.push(lr);
+      });
+      return merged;
+    }
+  } catch(e){
+    console.warn('API load failed, using local');
+  }
+  return localGetAll();
+}
+
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let state = { fio:'', role:'', answers:[], currentQ:0, result:null };
+let adminResults = [];
+const ADMIN_PWD = 'Etazhi2024!';
+
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════
+// HOME → START
+// ══════════════════════════════════════
+function startTest(){
+  const fio = document.getElementById('inp-fio').value.trim();
+  const role = document.getElementById('inp-role').value;
+  const err = document.getElementById('home-err');
+  if(!fio||!role){ err.style.display='block'; return; }
+  err.style.display='none';
+
+  // Check if already completed locally
+  const existing = localGetAll().find(r=>r.fio===fio);
+  if(existing){
+    if(!confirm(`"${fio}" уже проходил(а) тест. Пройти заново?`)) return;
+  }
+
+  state = {fio, role, answers: new Array(situations.length).fill(''), currentQ:0, result:null};
+  document.getElementById('intro-who').textContent = fio + ' · ' + role;
+  show('s-intro');
+}
+
+function goTest(){
+  show('s-test');
+  renderQ();
+}
+
+// ══════════════════════════════════════
+// TEST
+// ══════════════════════════════════════
+function renderQ(){
+  const q = state.currentQ, tot = situations.length, s = situations[q];
+  document.getElementById('prog-label').textContent = state.fio + ' · ' + state.role;
+  document.getElementById('prog-count').textContent = (q+1) + ' / ' + tot;
+  document.getElementById('prog-fill').style.width = pct(q,tot)+'%';
+
+  document.getElementById('dots').innerHTML = situations.map((_,i)=>
+    `<div class="dot${i<q&&state.answers[i]?' done':i===q?' now':''}"></div>`).join('');
+
+  document.getElementById('sit-card').innerHTML = `
+    <div class="sit-number">Ситуация ${q+1}</div>
+    <div class="bubble bubble-other">${s.o}</div>
+    <div class="bubble-context">${s.n}</div>`;
+
+  document.getElementById('ans-input').value = state.answers[q]||'';
+  document.getElementById('btn-prev').style.opacity = q===0?'0.3':'1';
+  document.getElementById('btn-next').textContent = q===tot-1?'Завершить ✓':'Далее →';
+  document.getElementById('ans-input').focus();
+}
+
+function nextQ(){
+  const val = document.getElementById('ans-input').value.trim();
+  if(!val){ alert('Напишите ответ перед тем как продолжить.'); return; }
+  state.answers[state.currentQ] = val;
+  if(state.currentQ < situations.length-1){ state.currentQ++; renderQ(); return; }
+  finishTest();
+}
+
+function prevQ(){
+  if(state.currentQ>0){
+    state.answers[state.currentQ] = document.getElementById('ans-input').value;
+    state.currentQ--;
+    renderQ();
+  }
+}
+
+// ══════════════════════════════════════
+// FINISH
+// ══════════════════════════════════════
+async function finishTest(){
+  show('s-saving');
+  const res = calcResults(state.answers);
+  const entry = {
+    fio: state.fio,
+    role: state.role,
+    answers: state.answers,
+    dirs: res.dirs,
+    types: res.types,
+    gcr: res.gcr,
+    scored: res.scored,
+    ts: Date.now()
+  };
+  state.result = entry;
+  await saveResult(entry);
+  document.getElementById('done-msg').textContent =
+    'Спасибо, ' + state.fio.split(' ')[0] + '! Ваши результаты сохранены.';
+  show('s-done');
+}
+
+// ══════════════════════════════════════
+// PERSONAL RESULT
+// ══════════════════════════════════════
+function showMyResult(){
+  if(!state.result){ show('s-home'); return; }
+  renderPersonResult(state.result, 's-result', 'res-name','res-role','res-dirs','res-types','res-profile','res-gcr','res-answers');
+  show('s-result');
+}
+
+function renderPersonResult(r, screen, nId, rId, dId, tId, pId, gId, aId){
+  const tot = r.scored.length;
+  document.getElementById(nId).textContent = r.fio;
+  document.getElementById(rId).textContent = r.role;
+
+  const dirColors = {E:'#dc2626',I:'#2563eb',M:'#16a34a'};
+  const typeColors = {OD:'#7c3aed',ED:'#ea580c',NP:'#0d9488'};
+  const dirDesc = {
+    E:'Реакции направлены вовне: претензии, раздражение на других',
+    I:'Реакции направлены внутрь: самообвинение, принятие вины',
+    M:'Нейтральные реакции: сглаживание, принятие ситуации'
+  };
+  const typeDesc = {
+    OD:'Акцент на препятствии и его значимости',
+    ED:'Защита своего «Я», оправдание себя',
+    NP:'Ориентация на решение и следующий шаг'
+  };
+
+  document.getElementById(dId).innerHTML = Object.entries(r.dirs).map(([k,v])=>`
+    <div class="metric">
+      <div class="metric-val" style="color:${dirColors[k]}">${pct(v,tot)}%</div>
+      <div class="metric-label">${k}</div>
+    </div>`).join('');
+
+  document.getElementById(tId).innerHTML = Object.entries(r.types).map(([k,v])=>`
+    <div class="metric">
+      <div class="metric-val" style="color:${typeColors[k]}">${pct(v,tot)}%</div>
+      <div class="metric-label">${k}</div>
+    </div>`).join('');
+
+  const domDir = Object.entries(r.dirs).sort((a,b)=>b[1]-a[1])[0][0];
+  const domType = Object.entries(r.types).sort((a,b)=>b[1]-a[1])[0][0];
+  document.getElementById(pId).innerHTML = `
+    <div class="profile-tags">
+      <span class="badge badge-${domDir}">Ведущее: ${domDir}</span>
+      <span class="badge badge-${domType}">Тип: ${domType}</span>
+    </div>
+    <div class="profile-text">${getProfile(domDir,domType,r.fio.split(' ')[0])}</div>`;
+
+  const gcr = r.gcr;
+  document.getElementById(gId).innerHTML = `
+    <div class="gcr-val">${gcr}%</div>
+    <div class="gcr-text"><strong>Индекс социальной адаптации (GCR)</strong><br>
+    ${gcr>=65?'Высокий — реакции хорошо соответствуют социально принятым нормам.':
+      gcr>=45?'Средний — умеренное соответствие социальным нормам реагирования.':
+      'Низкий — реакции часто расходятся с принятыми нормами.'}</div>`;
+
+  document.getElementById(aId).innerHTML = r.scored.map((s,i)=>`
+    <div class="answer-row">
+      <div class="answer-sit">${i+1}. ${situations[i].o.substring(0,60)}…</div>
+      <div class="answer-text">${s.ans}</div>
+      <span class="badge badge-${s.dir}" style="margin-right:4px">${s.dir}</span>
+      <span class="badge badge-${s.type}">${s.type}</span>
+    </div>`).join('');
+}
+
+function getProfile(dir,type,name){
+  const p = {
+    'E-OD':`${name} склонен(а) акцентировать внимание на самой трудности и раздражаться на тех, кто создаёт препятствия. Риск — повышенная конфликтность в стрессовых ситуациях. Точка роста: эмоциональная регуляция и пауза перед реакцией.`,
+    'E-ED':`${name} в сложных ситуациях защищает себя и склонен(а) перекладывать ответственность. Для командной работы это риск потери доверия коллег. Точка роста: принятие ответственности и открытое признание ошибок.`,
+    'E-NP':`${name} реагирует энергично и требует от других найти выход. Это продуктивно при чётком распределении ролей, но важно следить, чтобы давление не было избыточным.`,
+    'I-OD':`${name} остро переживает неудачи, фиксируясь на проблеме и возлагая вину на себя. Высокий риск выгорания. Точка роста: разделение ответственности и конструктивное переосмысление неудач.`,
+    'I-ED':`${name} при трудностях уходит в самообвинение, защищая при этом своё «Я» от внешней критики. Это противоречие создаёт внутреннее напряжение. Точка роста: работа с самооценкой и открытость к обратной связи.`,
+    'I-NP':`${name} принимает ответственность на себя и сразу думает о том, как исправить ситуацию. Зрелая и продуктивная позиция. Точка роста: не допускать избыточного самобичевания.`,
+    'M-OD':`${name} склонен(а) преуменьшать значение проблем — иногда это приводит к недооценке реальных рисков. Точка роста: сохранять реалистичный взгляд, не уходя в пассивность.`,
+    'M-ED':`${name} в сложных ситуациях стремится уйти от конфликта и защититься от претензий, не беря активной роли. Точка роста: развитие ассертивности.`,
+    'M-NP':`${name} принимает трудности спокойно и сразу ориентируется на решение. Высокая стрессоустойчивость и конструктивность — сильный ресурс для команды.`,
+  };
+  return p[`${dir}-${type}`]||`${name} показал(а) смешанный профиль реакций, требующий детального анализа.`;
+}
+
+// ══════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════
+function goAdmin(){ show('s-admin-login'); }
+
+function checkPw(){
+  const pw = document.getElementById('admin-pw').value;
+  const err = document.getElementById('pw-err');
+  if(pw!==ADMIN_PWD){ err.style.display='block'; return; }
+  err.style.display='none';
+  show('s-admin');
+  loadAdmin();
+}
+
+async function loadAdmin(){
+  document.getElementById('admin-loading').style.display='flex';
+  document.getElementById('admin-body').style.display='none';
+  adminResults = await getAllResults();
+  renderAdminStats();
+  document.getElementById('admin-loading').style.display='none';
+  document.getElementById('admin-body').style.display='block';
+  adminTab('all', document.querySelector('.tab.active'));
+}
+
+function renderAdminStats(){
+  const total = 18;
+  const done = adminResults.length;
+  const mgrs = adminResults.filter(r=>r.role.includes('МОП')).length;
+  const rops = adminResults.filter(r=>r.role.includes('Руководитель')).length;
+  document.getElementById('admin-stats').innerHTML=`
+    <div class="stat-box"><div class="stat-val">${done}<span style="font-size:18px;color:var(--muted)">/${total}</span></div><div class="stat-label">Прошли</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--blue)">${Math.round(done/total*100)}%</div><div class="stat-label">Готовность</div></div>
+    <div class="stat-box"><div class="stat-val">${mgrs}</div><div class="stat-label">МОПов</div></div>
+    <div class="stat-box"><div class="stat-val">${rops}</div><div class="stat-label">РОПов</div></div>`;
+}
+
+function adminTab(key, btn){
+  document.querySelectorAll('.tab-row .tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const c = document.getElementById('admin-content');
+  if(key==='all') renderAll(c);
+  else if(key==='compare') renderCompare(c);
+  else if(key==='managers') renderGroup(c,'МОП');
+  else if(key==='rops') renderGroup(c,'Руководитель');
+  else if(key==='kd') renderGroup(c,'Коммерческий');
+  else if(key==='gd') renderGroup(c,'Генеральный');
+}
+
+const AVATAR_COLORS = ['#2563eb','#dc2626','#16a34a','#7c3aed','#ea580c','#0d9488','#c8a84b','#db2777'];
+
+function getInitials(fio){
+  return fio.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+
+function renderAll(c){
+  if(!adminResults.length){
+    c.innerHTML='<div class="card"><p>Пока никто не прошёл тест.</p></div>'; return;
+  }
+  c.innerHTML='<div class="card">'+ adminResults.map((r,i)=>{
+    const domDir = Object.entries(r.dirs).sort((a,b)=>b[1]-a[1])[0][0];
+    const domType = Object.entries(r.types).sort((a,b)=>b[1]-a[1])[0][0];
+    const color = AVATAR_COLORS[i%AVATAR_COLORS.length];
+    return `<div class="person-row" onclick="viewPerson('${r.fio.replace(/'/g,"\\'")}')">
+      <div class="avatar" style="background:${color}">${getInitials(r.fio)}</div>
+      <div class="person-info">
+        <div class="person-name">${r.fio}</div>
+        <div class="person-role">${r.role}</div>
+      </div>
+      <div class="person-badges">
+        <span class="badge badge-${domDir}">${domDir}</span>
+        <span class="badge badge-${domType}">${domType}</span>
+        <span style="font-size:12px;color:var(--muted);margin-left:4px">${r.gcr}% GCR</span>
+      </div>
+    </div>`;
+  }).join('')+'</div>';
+}
+
+function renderCompare(c){
+  if(adminResults.length<2){
+    c.innerHTML='<div class="card"><p>Нужно минимум 2 участника для сравнения.</p></div>'; return;
+  }
+  const barColors = {E:'#dc2626',I:'#2563eb',M:'#16a34a',OD:'#7c3aed',ED:'#ea580c',NP:'#0d9488'};
+  c.innerHTML='<div class="compare-grid">'+ adminResults.map((r,i)=>{
+    const tot = r.scored.length;
+    const bars = [['E',r.dirs.E],['I',r.dirs.I],['M',r.dirs.M],['OD',r.types.OD],['ED',r.types.ED],['NP',r.types.NP]];
+    const color = AVATAR_COLORS[i%AVATAR_COLORS.length];
+    return `<div class="compare-card" onclick="viewPerson('${r.fio.replace(/'/g,"\\'")}')">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div class="avatar" style="background:${color};width:30px;height:30px;font-size:11px">${getInitials(r.fio)}</div>
+        <div>
+          <div class="compare-name">${r.fio.split(' ').slice(0,2).join(' ')}</div>
+          <div class="compare-role">${r.role.split(' ')[0]}${r.role.includes('РОП')?'':r.role.includes('Руководитель')?' (РОП)':''}</div>
+        </div>
+      </div>
+      ${bars.map(([k,v])=>`<div class="mini-bar-row">
+        <span class="mini-bar-label">${k}</span>
+        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${pct(v,tot)}%;background:${barColors[k]}"></div></div>
+        <span class="mini-bar-val">${pct(v,tot)}%</span>
+      </div>`).join('')}
+    </div>`;
+  }).join('')+'</div>';
+}
+
+function renderGroup(c, roleFilter){
+  const filtered = adminResults.filter(r=>r.role.includes(roleFilter));
+  if(!filtered.length){
+    c.innerHTML='<div class="card"><p>В этой группе пока никто не прошёл тест.</p></div>'; return;
+  }
+  const barColors = {E:'#dc2626',I:'#2563eb',M:'#16a34a',OD:'#7c3aed',ED:'#ea580c',NP:'#0d9488'};
+  c.innerHTML='<div class="compare-grid">'+ filtered.map((r,i)=>{
+    const tot = r.scored.length;
+    const bars = [['E',r.dirs.E],['I',r.dirs.I],['M',r.dirs.M],['OD',r.types.OD],['ED',r.types.ED],['NP',r.types.NP]];
+    const color = AVATAR_COLORS[i%AVATAR_COLORS.length];
+    return `<div class="compare-card" onclick="viewPerson('${r.fio.replace(/'/g,"\\'")}')">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div class="avatar" style="background:${color};width:30px;height:30px;font-size:11px">${getInitials(r.fio)}</div>
+        <div>
+          <div class="compare-name">${r.fio.split(' ').slice(0,2).join(' ')}</div>
+          <div class="compare-role">${r.role}</div>
+        </div>
+      </div>
+      ${bars.map(([k,v])=>`<div class="mini-bar-row">
+        <span class="mini-bar-label">${k}</span>
+        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${pct(v,tot)}%;background:${barColors[k]}"></div></div>
+        <span class="mini-bar-val">${pct(v,tot)}%</span>
+      </div>`).join('')}
+    </div>`;
+  }).join('')+'</div>';
+}
+
+function viewPerson(fio){
+  const r = adminResults.find(x=>x.fio===fio);
+  if(!r) return;
+  document.getElementById('adm-person-name').textContent = r.fio;
+  const el = document.getElementById('adm-person-content');
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-title">Направление реакции</div>
+      <div class="metrics-grid" id="ap-dirs"></div>
+      <div class="card-title" style="margin-top:12px">Тип реакции</div>
+      <div class="metrics-grid" id="ap-types"></div>
+      <div class="profile-box" id="ap-profile"></div>
+      <div class="gcr-box" id="ap-gcr"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ответы по ситуациям</div>
+      <div id="ap-answers"></div>
+    </div>`;
+
+  renderPersonResult(r,'s-admin-person','adm-person-name','adm-person-name','ap-dirs','ap-types','ap-profile','ap-gcr','ap-answers');
+  // fix name (was overwritten)
+  document.getElementById('adm-person-name').textContent = r.fio;
+  show('s-admin-person');
+}
+</script>
+</body>
+</html>
